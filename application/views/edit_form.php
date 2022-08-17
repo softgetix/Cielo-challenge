@@ -124,23 +124,24 @@
       }
 </style>
 <div class="main-block">
-  <h1>Registration</h1>
+  <h1>Edit</h1>
   <form action="/">
+    <input type="hidden" name="user_id" value="<?php echo $user->id ?>">
    <div> 
     <label id="icon" for="name"><i class="fas fa-user"></i></label>
-    <input type="text" name="name" id="name" placeholder="Name" required/>
+    <input type="text" name="name" id="name" placeholder="Name" value="<?php echo $user->name?>" required/>
    </div> 
    <div>  
     <label id="icon" for="name"><i class="fa fa-calendar"></i></label>
-    <input type="text" name="dob" id="dob" placeholder="Date of Birth" autocomplete="off" required/>
+    <input type="text" name="dob" id="dob" placeholder="Date of Birth" autocomplete="off" value="<?php echo date('m/d/Y',strtotime($user->dob)) ?>" required/>
    </div> 
    <div>  
     <label id="icon" for="email"><i class="fas fa-envelope"></i></label>
-    <input type="text" name="email" id="email" placeholder="Email" required/>
+    <input type="text" name="email" id="email" placeholder="Email" value="<?php echo $user->email ?>" required/>
    </div> 
     <div> 
       <label id="icon" for="color"><i class="fa fa-cog"></i></label>
-      <input type="text" name="color" id="color" placeholder="Favorite Color" autocomplete="off" required/>
+      <input type="text" name="color" id="color" placeholder="Favorite Color" autocomplete="off" value="<?php echo $user->color ?>" required/>
     </div>
     <div class="btn-block">
       <button type="submit" href="/">Submit</button>
@@ -160,14 +161,13 @@
       e.preventDefault();
       $.ajax({
         type: 'post',
-        url: base_url + 'formController/save',
+        url: base_url + 'formController/update',
         data: form.serialize(),
         dataType:'json',
         success: function (data) {
          if(data && data.status == true){
-          form.trigger("reset");
           toastr.success('Success',data.msg);
-          setTimeout(function(){ location.href = base_url;}, 2000 );
+          setTimeout(function(){ location.href = base_url;},  2000 );
          }else if(data && data.status == false){
           toastr.error('Error',data.msg);
          }else{
@@ -178,5 +178,4 @@
      } 
     });
  }); 
-
 </script>
